@@ -40,9 +40,9 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<String> getUserInfo(@RequestBody User user) {
 		try {
-			User foundUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+			User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 			
-			if (!foundUser.getUsername().isEmpty()) {
+			if (!foundUser.getEmail().isEmpty()) {
 				return ResponseEntity.status(HttpStatus.OK).body("Usuário autenticado com sucesso!!!");
 			}
 			return null;
@@ -71,10 +71,16 @@ public class UserController {
 		return userSkillsRepository.save(user);
 	}
 	
+	@GetMapping("/getAllUserInfoSample")
+	public List<UserInfo> getAllUserInfoSample() {
+		return userInfoRepository.getAllUserInfoSample();
+	}
+	
 	@PostMapping("/updateUserInfo")
 	public UserInfo updateUserInfo(@RequestBody UserInfo user) {
 		return userInfoRepository.save(user);
 	}
 	 
+
 
 }

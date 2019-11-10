@@ -21,14 +21,10 @@ public class User implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-
-	private String name;
 	@Column(unique = true)
-	private String username;
-	
-	@Column(unique = true)
+	@NotNull
 	private String email;
-	
+	@NotNull
 	private String password;
 	
 
@@ -39,26 +35,6 @@ public class User implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 

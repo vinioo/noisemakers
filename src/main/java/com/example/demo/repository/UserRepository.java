@@ -6,6 +6,5 @@ import com.example.demo.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	User findById(long id);
-	User findByUsernameAndPassword(String username, String password);
-	User findByUsername(String username);
+	User findByEmailAndPassword(String email, String password);
 }

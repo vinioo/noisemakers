@@ -26,6 +26,8 @@ public class UserInfo implements Serializable{
 	
 	private String description;
 	
+	private String mainSkill;
+	
 	private String hashtags;
 	
 	private String picture;
