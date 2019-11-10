@@ -49,6 +49,10 @@ public class BandController {
 	public Band insertBand(@RequestBody Band band) {
 		return bandRepository.save(band);
 	}
+	@GetMapping("/getAllBandInfoSample")
+	public List<Band> getAllBandInfoSample() {
+		return bandRepository.getAllBandInfoSample();
+	}
 	 
 
 }
