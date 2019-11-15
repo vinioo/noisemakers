@@ -2,40 +2,40 @@ package com.example.demo.models;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="USERINFO", schema = "public")
-public class UserInfo implements Serializable{
-	
+@Table(name = "USERINFO", schema = "public")
+public class UserInfo extends User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
-	private long userId;
-	
+	@OneToOne
+	@JoinColumn(unique = true)
+	private User user;
+	@NotNull(message = "A descrição não pode ser vazia!")
+	@Size(min = 32, message = "A descrição deve ter no minimo 32 caracteres!")
 	private String description;
-	
+	@NotNull(message = "A habilidade principal não pode ser vazia!")
 	private String mainSkill;
-	
-	private String hashtags;
-	
+
 	private String picture;
-	
+	@NotNull(message = "O país não pode ser vazio!")
 	private String country;
-	
+	@NotNull(message = "A cidade não pode ser vazia!")
 	private String city;
-	
+	@NotNull(message = "O estado não pode ser vazio!")
 	private String state;
 
 	public long getId() {
@@ -45,13 +45,14 @@ public class UserInfo implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
+	
 
-	public long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getDescription() {
@@ -60,14 +61,6 @@ public class UserInfo implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getHashtags() {
-		return hashtags;
-	}
-
-	public void setHashtags(String hashtags) {
-		this.hashtags = hashtags;
 	}
 
 	public String getPicture() {
@@ -101,10 +94,13 @@ public class UserInfo implements Serializable{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
-	
-	
-	
-	
-}
 
+	public String getMainSkill() {
+		return mainSkill;
+	}
+
+	public void setMainSkill(String mainSkill) {
+		this.mainSkill = mainSkill;
+	}
+
+}
