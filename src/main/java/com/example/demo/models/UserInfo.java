@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,8 @@ public class UserInfo implements Serializable {
 	@NotNull(message = "A habilidade principal não pode ser vazia!")
 	private String mainSkill;
 
+	@Column(name = "PICTURE", length = 9999999)
+
 	private String picture;
 	@NotNull(message = "O país não pode ser vazio!")
 	private String country;
@@ -45,7 +48,6 @@ public class UserInfo implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
 
 	public User getUser() {
 		return user;
