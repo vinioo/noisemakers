@@ -46,12 +46,12 @@ public class UserController {
 
 	@Valid
 	@PostMapping("/login")
-	public ResponseEntity<String> getUserInfo(@RequestBody User user) {
+	public ResponseEntity<?> getUserInfo(@RequestBody User user) {
 		try {
 			User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 
 			if (!foundUser.getEmail().isEmpty()) {
-				return ResponseEntity.status(HttpStatus.OK).body("Usuário autenticado com sucesso!!!");
+				return ResponseEntity.status(HttpStatus.OK).body(foundUser);
 			}
 			return null;
 		} catch (Exception err) {
