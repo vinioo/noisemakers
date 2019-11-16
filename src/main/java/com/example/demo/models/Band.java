@@ -22,20 +22,22 @@ public class Band implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@OneToOne
-	@JoinColumn(unique = true)
-	private User userId;
+	private long userId;
 	@Column(unique = true)
 	@NotNull(message = "O nome da banda não pode ser vazio!")
 	private String name;
 	@NotNull(message = "O gênero da banda não pode ser vazio!")
 	private String genre;
+	@NotNull(message = "A cidade não pode ser vazia!")
+	private String city;
 	@NotNull(message = "A quantidade de membros não pode ser vazia!")
 	private int qttyMembers;
 	@NotNull(message = "A descrição não pode ser vazia!")
 	@Size(min = 32, message = "A descrição deve ter no mínimo 32 caracteres!")
 	private String description;
+	@Column(name = "IMAGE", length = 9999999)
 	private String image;
+	@Column(name = "BIGIMAGE", length = 9999999)
 	private String bigImage;
 
 	public long getId() {
@@ -92,6 +94,22 @@ public class Band implements Serializable {
 
 	public void setBigImage(String bigImage) {
 		this.bigImage = bigImage;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }
