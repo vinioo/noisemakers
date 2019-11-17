@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.ApiRequestException;
 import com.example.demo.models.User;
 import com.example.demo.models.UserInfo;
 import com.example.demo.repository.UserInfoRepository;
@@ -34,32 +34,47 @@ public class UserController {
 
 	@GetMapping("/user")
 	public List<UserInfo> listAllUsers() {
-		return userInfoRepository.findAll();
+		try {
+			return userInfoRepository.findAll();
+		} catch (Exception handlerException) {
+			throw new ApiRequestException("Erro ao buscar usuários!", handlerException);
+		}
 	}
 
 	@GetMapping("/user/{id}")
 	public User getUser(@PathVariable(name = "id") long id) {
-		return userRepository.findById(id);
-	}
-
-	@DeleteMapping("/user")
-	public void deleteUser(@RequestBody User produto) {
-		userRepository.delete(produto);
+		try {
+			return userRepository.findById(id);
+		} catch (Exception handlerException) {
+			throw new ApiRequestException("Erro ao buscar usuário pelo ID!", handlerException);
+		}
 	}
 
 	@PutMapping("/user")
-	public User updateUser(@RequestBody User produto) {
-		return userRepository.save(produto);
+	public User updateUser(@RequestBody User user) {
+		try {
+			return userRepository.save(user);
+		} catch (Exception handlerException) {
+			throw new ApiRequestException("Erro ao atualizar usuário!", handlerException);
+		}
 	}
 
 	@GetMapping("/getAllUserInfoSample")
 	public List<UserInfo> getAllUserInfoSample() {
-		return userInfoRepository.getAllUserInfoSample();
+		try {
+			return userInfoRepository.getAllUserInfoSample();
+		} catch(Exception handlerException) {
+			throw new ApiRequestException("Erro ao obter exemplo de usuários!", handlerException);
+		}
 	}
 
 	@PostMapping("/updateUserInfo")
 	public UserInfo updateUserInfo(@Valid @RequestBody UserInfo user) {
-		return userInfoRepository.save(user);
+		try {
+			return userInfoRepository.save(user);
+		} catch(Exception handlerException) {
+			throw new ApiRequestException("Erro ao atualizar informações do usuário!", handlerException);
+		}
 	}
 
 }

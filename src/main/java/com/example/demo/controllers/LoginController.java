@@ -11,31 +11,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.ApiInvalidRequestException;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value = "/api")
 
 public class LoginController {
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Valid
 	@PostMapping("/login")
 	public ResponseEntity<?> getUserInfo(@RequestBody User user) {
-		try {
-			User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		User foundUser = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
 
-			if (!foundUser.getEmail().isEmpty()) {
-				return ResponseEntity.status(HttpStatus.OK).body(foundUser);
-			}
-			return null;
-		} catch (Exception err) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos!");
+		if (foundUser == null) {
+			throw new ApiInvalidRequestException("Usuário ou senha inválidos!");
 		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(foundUser);
 
 	}
 

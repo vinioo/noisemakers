@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exceptions.ApiInvalidRequestException;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 
@@ -23,7 +24,11 @@ public class SignupController {
 
 	@PostMapping("/signup")
 	public User saveUser(@Valid @RequestBody User user) {
-		return userRepository.save(user);
+		User existentUser = userRepository.findByEmail(user.getEmail());
+		if (existentUser == null) {
+			return userRepository.save(user);
+		}
+		throw new ApiInvalidRequestException("Usuário já cadastrado!");
 	}
 
 }
